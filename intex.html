@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Captcha</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .meme-image {
+            transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .meme-image:hover {
+            transform: scale(1.05);
+        }
+        .meme-image.selected {
+            border: 4px solid #2563eb;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+        /* Custom spinner for loading state */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Captcha Card Container -->
+    <div class="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-sm">
+
+        <!-- Header Section -->
+        <div class="bg-blue-600 text-white p-4 sm:p-6 text-center">
+            <h2 class="text-xl sm:text-2xl font-semibold mb-1">I am not a robot</h2>
+            <p class="text-sm font-light">Select the square with the <span id="correct-meme-name" class="font-bold">Meme Title</span> meme.</p>
+        </div>
+
+        <!-- Image Grid -->
+        <div id="meme-grid" class="grid grid-cols-2 gap-1 p-1">
+            <!-- Meme images will be injected here by JavaScript -->
+        </div>
+        
+        <!-- Status and Buttons Section -->
+        <div class="flex items-center justify-between p-4 sm:p-6 bg-gray-100 border-t border-gray-200">
+            <!-- Status message container -->
+            <div id="status-message" class="text-sm text-gray-700"></div>
+
+            <div class="flex space-x-2">
+                <!-- Reset Button -->
+                <button id="reset-btn" class="flex-grow flex items-center justify-center px-4 py-2 bg-gray-300 text-gray-800 rounded-lg font-medium transition duration-200 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Reset
+                </button>
+                <!-- Verify Button -->
+                <button id="verify-btn" class="flex-grow flex items-center justify-center px-6 py-2 bg-blue-600 text-white rounded-lg font-bold transition duration-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-400 disabled:cursor-not-allowed" disabled>
+                    Verify
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Captcha Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Data for the memes. You can add more memes here!
+            const memeData = [
+                { id: 1, name: "Distracted Boyfriend", url: "https://placehold.co/300x300/a8dadc/ffffff?text=Distracted+Boyfriend" },
+                { id: 2, name: "Drake Hotline Bling", url: "https://placehold.co/300x300/e63946/ffffff?text=Drake+Hotline+Bling" },
+                { id: 3, name: "Success Kid", url: "https://placehold.co/300x300/fca311/ffffff?text=Success+Kid" },
+                { id: 4, name: "Disaster Girl", url: "https://placehold.co/300x300/457b9d/ffffff?text=Disaster+Girl" },
+                { id: 5, name: "Crying Michael Jordan", url: "https://placehold.co/300x300/1d3557/ffffff?text=Crying+Jordan" },
+                { id: 6, name: "Woman Yelling at a Cat", url: "https://placehold.co/300x300/2a9d8f/ffffff?text=Woman+Yelling+at+a+Cat" },
+            ];
+
+            // DOM elements
+            const memeGrid = document.getElementById('meme-grid');
+            const verifyBtn = document.getElementById('verify-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const statusMessage = document.getElementById('status-message');
+            const correctMemeNameEl = document.getElementById('correct-meme-name');
+
+            let currentCorrectMemeId = null;
+            let selectedMemeId = null;
+
+            // Function to load memes into the grid
+            function loadMemes() {
+                // Clear the grid and reset state
+                memeGrid.innerHTML = '';
+                selectedMemeId = null;
+                verifyBtn.disabled = true;
+                statusMessage.textContent = '';
+                
+                // Shuffle the meme data and pick 4
+                const shuffledMemes = memeData.sort(() => 0.5 - Math.random());
+                const memesToShow = shuffledMemes.slice(0, 4);
+
+                // Pick one of the 4 as the correct one
+                const correctMeme = memesToShow[Math.floor(Math.random() * memesToShow.length)];
+                currentCorrectMemeId = correctMeme.id;
+                correctMemeNameEl.textContent = correctMeme.name;
+
+                // Create and append image elements
+                memesToShow.forEach(meme => {
+                    const img = document.createElement('img');
+                    img.src = meme.url;
+                    img.alt = meme.name;
+                    img.dataset.id = meme.id;
+                    img.dataset.name = meme.name;
+                    img.className = 'w-full h-auto rounded-md transition-all meme-image';
+                    img.addEventListener('click', handleImageClick);
+                    memeGrid.appendChild(img);
+                });
+            }
+
+            // Handles an image click
+            function handleImageClick(event) {
+                // Remove 'selected' class from all images
+                document.querySelectorAll('.meme-image').forEach(img => {
+                    img.classList.remove('selected');
+                });
+
+                // Add 'selected' class to the clicked image
+                const clickedImage = event.target;
+                clickedImage.classList.add('selected');
+                selectedMemeId = parseInt(clickedImage.dataset.id);
+                verifyBtn.disabled = false; // Enable the verify button
+            }
+
+            // Verifies the user's selection
+            function verifyCaptcha() {
+                if (selectedMemeId === null) {
+                    statusMessage.textContent = 'Please select a meme first.';
+                    statusMessage.className = 'text-sm text-red-600 font-medium';
+                    return;
+                }
+
+                if (selectedMemeId === currentCorrectMemeId) {
+                    statusMessage.textContent = 'Verification successful!';
+                    statusMessage.className = 'text-sm text-green-600 font-medium';
+                } else {
+                    statusMessage.textContent = 'Verification failed. Try again.';
+                    statusMessage.className = 'text-sm text-red-600 font-medium';
+                }
+                
+                // Disable button and remove click handlers to prevent re-submitting
+                verifyBtn.disabled = true;
+                document.querySelectorAll('.meme-image').forEach(img => {
+                    img.removeEventListener('click', handleImageClick);
+                });
+            }
+
+            // Resets the captcha
+            function resetCaptcha() {
+                loadMemes();
+            }
+
+            // Add event listeners to the buttons
+            verifyBtn.addEventListener('click', verifyCaptcha);
+            resetBtn.addEventListener('click', resetCaptcha);
+
+            // Initial load of memes
+            loadMemes();
+        });
+    </script>
+</body>
+</html>
