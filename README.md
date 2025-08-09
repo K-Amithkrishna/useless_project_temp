@@ -51,6 +51,9 @@ For Software:
 ![Screenshot3](last.png)
 *final verified section
 
+Video
+[video showing how this captcha works](https://drive.google.com/file/d/1la9LwqyFbK-F_ZVWfvVNp_nflHzwLxUG/view?usp=sharing)
+
 
 ## Team Contributions
 - [Karthik]: I designed the user interface, implemented the core HTML/CSS/JavaScript logic for displaying memes and    validating answers, and managed the overall project workflow.
