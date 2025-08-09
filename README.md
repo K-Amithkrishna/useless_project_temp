@@ -1,44 +1,39 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# Meme CAPTCHA  🎯
 
 
-## Basic Details
-### Team Name: [Name]
+### Team Name: SYBAU
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Karthik Murali - college of engineering perumon
+- Member 2: K Amithkrishna - college of engineering perumon
 
 ### Project Description
-[2-3 lines about what your project does]
+ We’re making a fun, meme-fueled CAPTCHA where users prove they’re human — not by ticking a traffic lights checkboxes, but by naming iconic memes. No boring puzzles — just straight-up meme recognition.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+Boredom to solve flipping captcha
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+ meme-fueled CAPTCHA to make thing more funnier.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- HTML,CSS,JAVASCRIPT
+- Tools used: VS Code (Code Editor)
+GitHub (Version Control & Hosting via GitHub Pages)
+Web Browser (brave)
+Figma (for design mockups)
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+Download the files, open index.html in your browser, and start guessing memes.
 
 # Run
 [commands]
@@ -47,50 +42,19 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1](intro.png)
+*intro check box*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot2](middle.png)
+*the meme selection space
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot3](last.png)
+*final verified section
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
-### Project Demo
-# Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
-
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Karthik]: I designed the user interface, implemented the core HTML/CSS/JavaScript logic for displaying memes and    validating answers, and managed the overall project workflow.
+- [Amithkrishna]: Selected the memes and helped in codding.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
